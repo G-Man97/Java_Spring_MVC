@@ -1,5 +1,7 @@
 package com.gmalykhin.mvc.controller;
 
+import com.gmalykhin.mvc.dto.AverageSalaryByDepartmentDTO;
+import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.*;
 import com.gmalykhin.mvc.service.MyService;
 import com.gmalykhin.mvc.service.SomeData;
@@ -106,25 +108,25 @@ public class MyController {
 
     @RequestMapping("/avgSalary")
     public String queryView(Model model) {
-        List<Object[]> obj = myService.getAvgSalaryByDepartment();
-        model.addAttribute("obj", obj);
+        List<AverageSalaryByDepartmentDTO> list = myService.getAvgSalaryByDepartment();
+        model.addAttribute("list", list);
 
         return "avg-salary";
     }
 
     @RequestMapping("/empByDepartment")
     public String empByDepartment(Model model) {
-        List<Object[]> obj = myService.getEmpByDepartment();
-        model.addAttribute("obj", obj);
+        List<EmployeeDTO> list = myService.getEmpByDepartment();
+        model.addAttribute("list", list);
 
         return "emp-by-department";
     }
 
     @RequestMapping(value = "/searchEmployee", method = RequestMethod.POST)
     public String searchEmployee(SomeData someData, Model model) {
-        List<Object[]> searchedEmployees = myService.searchEmployee(someData.getStrData());
+        List<EmployeeDTO> searchedEmployees = myService.searchEmployee(someData.getStrData());
 
-        model.addAttribute("obj", searchedEmployees);
+        model.addAttribute("list", searchedEmployees);
         return "emp-by-department";
     }
 }

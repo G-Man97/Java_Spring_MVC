@@ -12,7 +12,6 @@ public class Department {
     @Column(name = "id")
     private int id;
 
-
     @Column(name = "name")
     private String departmentName;
 
@@ -42,16 +41,5 @@ public class Department {
     public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
-
-
-
-    public Department() {
-    }
-
-    public Department(int id, String departmentName) {
-        this.id = id;
-        this.departmentName = departmentName;
-    }
-
 
 }

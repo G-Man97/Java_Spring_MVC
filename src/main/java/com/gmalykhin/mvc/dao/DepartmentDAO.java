@@ -1,5 +1,7 @@
 package com.gmalykhin.mvc.dao;
 
+import com.gmalykhin.mvc.dto.AverageSalaryByDepartmentDTO;
+import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.Department;
 
 import java.util.List;
@@ -13,9 +15,9 @@ public interface DepartmentDAO {
 
     void saveDepartment(Department department);
 
-    List<Object[]> getAvgSalaryByDepartment();
+    List<AverageSalaryByDepartmentDTO> getAvgSalaryByDepartment();
 
-    List<Object[]> getEmpByDepartment();
+    List<EmployeeDTO> getEmpByDepartment();
 
-    List<Object[]> searchEmployee(List<String> strData);
+    List<EmployeeDTO> searchEmployee(List<String> strData);
 }

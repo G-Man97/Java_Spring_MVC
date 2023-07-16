@@ -2,13 +2,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
-
     <body>
-
         <form id="toMain" action="/">
             <input type="submit" value="<- Main page"/>
         </form>
-        <input type="button" value="<- back" onclick="window.location.href='empByDepartment'">
+        <form id="back" action="/empByDepartment">
+            <input type="submit" value="<- back"/>
+        </form>
 
         <h2>Employee by department</h2>
 
@@ -60,45 +60,40 @@
         <br><br>
 
         <table cellpadding="10" border="2">
-            <h3><tr align="center" valign="middle">
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Salary</th>
-                <th>Department</th>
-                <th>Actions</th>
-            </tr>
+            <h3>
+                <tr align="center" valign="middle">
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Salary</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
             </h3>
 
             <c:choose>
-                <c:when test="${empty obj}">
+
+                <c:when test="${empty list}">
                     <tr><td colspan="5" align="center" valign="middle">No such employees found</td></tr>
                 </c:when>
-                <c:when test="${obj != null}">
 
-                    <c:forEach var="row" items="${obj}">
+                <c:when test="${not empty list}">
+
+                    <c:forEach var="element" items="${list}">
 
                         <tr align="center" valign="middle">
+                            <td>${element.name}</td>
+                            <td>${element.surname}</td>
+                            <td>${element.salary}</td>
+                            <td>${element.departmentName}</td>
 
-                            <c:forEach var="data" items="${row}" varStatus="counter">
+                            <c:url var="updateButton" value="/updateEmployee">
+                                <c:param name="empId" value="${element.id}"/>
+                            </c:url>
 
-                                <c:choose>
+                            <c:url var="deleteButton" value="/deleteEmployee">
+                                <c:param name="empId" value="${element.id}"/>
+                            </c:url>
 
-                                    <c:when test="${counter.index == 0}">
-
-                                        <c:url var="updateButton" value="/updateEmployee">
-                                            <c:param name="empId" value="${data}"/>
-                                        </c:url>
-
-                                        <c:url var="deleteButton" value="/deleteEmployee">
-                                            <c:param name="empId" value="${data}"/>
-                                        </c:url>
-                                    </c:when>
-
-                                    <c:when test="${counter.index > 0}">
-                                        <td>${data}</td>
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
                             <td>
                                 <input type="button" value="Update" onclick="window.location.href = '${updateButton}'"/>
                                 <input type="button" value="Delete" onclick="window.location.href = '${deleteButton}'"/>

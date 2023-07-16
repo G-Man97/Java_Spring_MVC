@@ -2,6 +2,8 @@ package com.gmalykhin.mvc.service;
 
 import com.gmalykhin.mvc.dao.DepartmentDAO;
 import com.gmalykhin.mvc.dao.EmployeeDAO;
+import com.gmalykhin.mvc.dto.AverageSalaryByDepartmentDTO;
+import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.Department;
 import com.gmalykhin.mvc.entity.Employee;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,14 @@ import java.util.List;
 @Service
 public class MyServiceImpl implements MyService {
 
+    private final EmployeeDAO employeeDAO;
+    private final DepartmentDAO departmentDAO;
+
     @Autowired
-    private EmployeeDAO employeeDAO;
-    @Autowired
-    private DepartmentDAO departmentDAO;
+    public MyServiceImpl(EmployeeDAO employeeDAO, DepartmentDAO departmentDAO) {
+        this.employeeDAO = employeeDAO;
+        this.departmentDAO = departmentDAO;
+    }
 
     @Override
     @Transactional
@@ -68,19 +74,19 @@ public class MyServiceImpl implements MyService {
 
     @Override
     @Transactional
-    public List<Object[]> getAvgSalaryByDepartment() {
+    public List<AverageSalaryByDepartmentDTO> getAvgSalaryByDepartment() {
         return departmentDAO.getAvgSalaryByDepartment();
     }
 
     @Override
     @Transactional
-    public List<Object[]> getEmpByDepartment() {
+    public List<EmployeeDTO> getEmpByDepartment() {
         return departmentDAO.getEmpByDepartment();
     }
 
     @Override
     @Transactional
-    public List<Object[]> searchEmployee(List<String> strData) {
+    public List<EmployeeDTO> searchEmployee(List<String> strData) {
         return departmentDAO.searchEmployee(strData);
     }
 }

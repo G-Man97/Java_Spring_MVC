@@ -3,7 +3,6 @@ package com.gmalykhin.mvc.entity;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 
 
 @Entity
@@ -31,19 +30,6 @@ public class Employee {
     @JoinColumn(name = "department_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Department department;
-
-
-    public Employee() {
-    }
-
-    public Employee(int id, String name, String surname,
-                    String birthday, double salary) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.birthday = birthday;
-        this.salary = salary;
-    }
 
     public int getId() {
         return id;

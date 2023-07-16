@@ -1,5 +1,7 @@
 package com.gmalykhin.mvc.service;
 
+import com.gmalykhin.mvc.dto.AverageSalaryByDepartmentDTO;
+import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.Department;
 import com.gmalykhin.mvc.entity.Employee;
 
@@ -22,9 +24,9 @@ public interface MyService {
 
     void saveDepartment(Department department);
 
-    List<Object[]> getAvgSalaryByDepartment();
+    List<AverageSalaryByDepartmentDTO> getAvgSalaryByDepartment();
 
-    List<Object[]> getEmpByDepartment();
+    List<EmployeeDTO> getEmpByDepartment();
 
-    List<Object[]> searchEmployee(List<String> strData);
+    List<EmployeeDTO> searchEmployee(List<String> strData);
 }
