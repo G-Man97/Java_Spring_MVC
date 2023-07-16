@@ -81,12 +81,12 @@ public class MyServiceImpl implements MyService {
     @Override
     @Transactional
     public List<EmployeeDTO> getEmpByDepartment() {
-        return departmentDAO.getEmpByDepartment();
+        return employeeDAO.getEmpByDepartment();
     }
 
     @Override
     @Transactional
     public List<EmployeeDTO> searchEmployee(List<String> strData) {
-        return departmentDAO.searchEmployee(strData);
+        return employeeDAO.searchEmployee(strData);
     }
 }

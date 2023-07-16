@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html>
     <body>
+        <form id="toMain" action="/api/employees">
+            <input type="submit" value="<- Main page"/>
+        </form>
+
         <h2>Average salary by department</h2>
         <table cellpadding="10" border="2">
             <h3>
@@ -11,7 +15,7 @@
                 </tr>
             </h3>
 
-            <c:forEach var="element" items="${list}">
+            <c:forEach var="element" items="${listOfDepartments}">
 
                 <tr align="center" valign="middle">
                     <td>${element.departmentName}</td>

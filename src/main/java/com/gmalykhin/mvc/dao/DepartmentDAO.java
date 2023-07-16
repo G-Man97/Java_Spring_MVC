@@ -16,8 +16,4 @@ public interface DepartmentDAO {
     void saveDepartment(Department department);
 
     List<AverageSalaryByDepartmentDTO> getAvgSalaryByDepartment();
-
-    List<EmployeeDTO> getEmpByDepartment();
-
-    List<EmployeeDTO> searchEmployee(List<String> strData);
 }

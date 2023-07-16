@@ -7,7 +7,7 @@ public class AverageSalaryByDepartmentDTO {
 
     public AverageSalaryByDepartmentDTO (String departmentName, double averageSalary) {
         this.departmentName = departmentName;
-        this.averageSalary = averageSalary;
+        this.averageSalary = (double) Math.round(averageSalary * 100) / 100;
     }
 
     public String getDepartmentName() {

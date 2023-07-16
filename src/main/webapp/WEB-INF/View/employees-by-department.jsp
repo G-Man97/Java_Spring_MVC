@@ -3,18 +3,18 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form id="toMain" action="/">
+        <form id="toMain" action="/api/employees">
             <input type="submit" value="<- Main page"/>
-        </form>
-        <form id="back" action="/empByDepartment">
+        </form><br>
+        <form id="back" action="/api/employees/by-department">
             <input type="submit" value="<- back"/>
         </form>
 
-        <h2>Employee by department</h2>
+        <h2>Employees by department</h2>
 
         <br><br>
 
-        <form id="searchEmployee" action="searchEmployee" method="post">
+        <form id="searchEmployee" action="/api/employees/search-employee" method="post">
             <label>Search an employee born </label>
             <input type="date" name="strData" id="fDate" onchange="check()" required/> -
             <input type="date" name="strData" id="sDate" onchange="check()" required/>
@@ -72,13 +72,13 @@
 
             <c:choose>
 
-                <c:when test="${empty list}">
+                <c:when test="${empty listOfEmployeeDTO}">
                     <tr><td colspan="5" align="center" valign="middle">No such employees found</td></tr>
                 </c:when>
 
-                <c:when test="${not empty list}">
+                <c:when test="${not empty listOfEmployeeDTO}">
 
-                    <c:forEach var="element" items="${list}">
+                    <c:forEach var="element" items="${listOfEmployeeDTO}">
 
                         <tr align="center" valign="middle">
                             <td>${element.name}</td>
@@ -86,11 +86,11 @@
                             <td>${element.salary}</td>
                             <td>${element.departmentName}</td>
 
-                            <c:url var="updateButton" value="/updateEmployee">
+                            <c:url var="updateButton" value="/api/employees/update-employee">
                                 <c:param name="empId" value="${element.id}"/>
                             </c:url>
 
-                            <c:url var="deleteButton" value="/deleteEmployee">
+                            <c:url var="deleteButton" value="/api/employees/delete-employee">
                                 <c:param name="empId" value="${element.id}"/>
                             </c:url>
 

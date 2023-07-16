@@ -1,5 +1,6 @@
 package com.gmalykhin.mvc.dao;
 
+import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,17 +11,19 @@ import java.util.List;
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO{
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public EmployeeDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
-        public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         Session session = sessionFactory.getCurrentSession();
-
         Query<Employee> query = session.createQuery("from Employee", Employee.class);
-        List<Employee> allEmployees = query.getResultList();
 
-        return allEmployees;
+        return query.getResultList();
     }
 
     @Override
@@ -32,20 +35,41 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     @Override
     public Employee getEmployee(int id) {
         Session session = sessionFactory.getCurrentSession();
-
-        Employee employee = session.get(Employee.class, id);
-
-        return employee;
+        return session.get(Employee.class, id);
     }
 
     @Override
     public void deleteEmployee(int id) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("delete from Employee " +
-                "where id = :employeeId");
-
+        Query<?> query = session.createQuery("delete from Employee where id = :employeeId");
         query.setParameter("employeeId", id);
         query.executeUpdate();
+    }
+
+    @Override
+    public List<EmployeeDTO> getEmpByDepartment() {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<EmployeeDTO> query = session.createQuery("select new com.gmalykhin.mvc.dto" +
+                ".EmployeeDTO(e.id, e.name, e.surname, e.salary, d.departmentName) " +
+                "from Department d join Employee e ON (d.id = e.department) " +
+                "order by d.departmentName", EmployeeDTO.class);
+
+        return query.list();
+    }
+
+    @Override
+    public List<EmployeeDTO> searchEmployee(List<String> strData) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<EmployeeDTO> query = session.createQuery("select new com.gmalykhin.mvc.dto" +
+                ".EmployeeDTO(e.id, e.name, e.surname, e.salary, d.departmentName) " +
+                "from Department d join Employee e ON (d.id = e.department) " +
+                "where e.birthday between :fD and :sD order by d.departmentName", EmployeeDTO.class);
+        query.setParameter("fD", strData.get(0));
+        query.setParameter("sD", strData.get(1));
+
+        return query.list();
     }
 }

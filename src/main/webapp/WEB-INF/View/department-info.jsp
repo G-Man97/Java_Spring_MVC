@@ -2,20 +2,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
-<body>
+    <body>
 
-<h2>Department Info</h2>
+        <form id="back" action="/api/departments">
+            <input type="submit" value="<- back"/>
+        </form>
 
-<form:form action="saveDepartment" modelAttribute="deps">
+        <h2>Department Info</h2>
 
-    <form:hidden path="id"/>
+        <form:form action="saveDepartment" modelAttribute="department">
 
-    Name <form:input path="departmentName"/>
-    <br><br>
+            <form:hidden path="id"/>
 
-    <input type="submit" value="OK"/>
+            Name <form:input path="departmentName"/>
+            <br><br>
 
-</form:form>
+            <input type="submit" value="OK"/>
 
-</body>
+        </form:form>
+    </body>
 </html>

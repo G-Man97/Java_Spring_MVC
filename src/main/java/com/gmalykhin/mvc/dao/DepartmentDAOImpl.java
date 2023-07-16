@@ -58,28 +58,4 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 
         return query.getResultList();
     }
-
-    @Override
-    public List<EmployeeDTO> getEmpByDepartment() {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<EmployeeDTO> query = session.createQuery("select new com.gmalykhin.mvc.dto.EmployeeDTO(e.id, e.name, e.surname, e.salary, d.departmentName) " +
-                "from Department d join Employee e ON (d.id = e.department) order by d.departmentName", EmployeeDTO.class);
-
-        return query.list();
-    }
-
-    @Override
-    public List<EmployeeDTO> searchEmployee(List<String> strData) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query<EmployeeDTO> query = session.createQuery("select new com.gmalykhin.mvc.dto" +
-                ".EmployeeDTO(e.id, e.name, e.surname, e.salary, d.departmentName) " +
-                "from Department d join Employee e ON (d.id = e.department) " +
-                "where e.birthday between :fD and :sD order by d.departmentName", EmployeeDTO.class);
-        query.setParameter("fD", strData.get(0));
-        query.setParameter("sD", strData.get(1));
-
-        return query.list();
-    }
 }
