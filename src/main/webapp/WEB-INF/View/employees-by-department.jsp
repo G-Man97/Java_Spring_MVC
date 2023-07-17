@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form id="toMain" action="/api/employees">
+        <form id="toMain" action="${pageContext.request.contextPath}/api/employees">
             <input type="submit" value="<- Main page"/>
         </form><br>
-        <form id="back" action="/api/employees/by-department">
+        <form id="back" action="${pageContext.request.contextPath}/api/employees/by-department">
             <input type="submit" value="<- back"/>
         </form>
 
@@ -14,7 +14,7 @@
 
         <br><br>
 
-        <form id="searchEmployee" action="/api/employees/search-employee" method="post">
+        <form id="searchEmployee" action="${pageContext.request.contextPath}/api/employees/search-employee" method="post">
             <label>Search an employee born </label>
             <input type="date" name="strData" id="fDate" onchange="check()" required/> -
             <input type="date" name="strData" id="sDate" onchange="check()" required/>
@@ -49,13 +49,13 @@
                 }
             }
             function showMessage() {
-                if(fDate.value != '' && sDate.value != '') {
+                if(fDate.value !== '' && sDate.value !== '') {
                     alert('There is employee who was born in ' + fDate.value + ' - ' + sDate.value);
                 }
             }
         </script>
 
-        <!-- script src="<! c:url value="/resources/js/forView-emp-by-department.js" />"></script-->
+        <!--script src="<!c:url value="/resources/js/forView-emp-by-department.js" />"></script-->
 
         <br><br>
 
@@ -70,38 +70,35 @@
                 </tr>
             </h3>
 
-            <c:choose>
 
-                <c:when test="${empty listOfEmployeeDTO}">
-                    <tr><td colspan="5" align="center" valign="middle">No such employees found</td></tr>
-                </c:when>
+            <c:if test="${empty listOfEmployeeDTO}">
+                <tr><td colspan="5" align="center" valign="middle">No such employees found</td></tr>
+            </c:if>
 
-                <c:when test="${not empty listOfEmployeeDTO}">
+            <c:if test="${not empty listOfEmployeeDTO}">
+                <c:forEach var="element" items="${listOfEmployeeDTO}">
 
-                    <c:forEach var="element" items="${listOfEmployeeDTO}">
+                    <tr align="center" valign="middle">
+                        <td>${element.name}</td>
+                        <td>${element.surname}</td>
+                        <td>${element.salary}</td>
+                        <td>${element.departmentName}</td>
 
-                        <tr align="center" valign="middle">
-                            <td>${element.name}</td>
-                            <td>${element.surname}</td>
-                            <td>${element.salary}</td>
-                            <td>${element.departmentName}</td>
+                        <c:url var="updateButton" value="/api/employees/update-employee">
+                            <c:param name="empId" value="${element.id}"/>
+                        </c:url>
 
-                            <c:url var="updateButton" value="/api/employees/update-employee">
-                                <c:param name="empId" value="${element.id}"/>
-                            </c:url>
+                        <c:url var="deleteButton" value="/api/employees/delete-employee">
+                            <c:param name="empId" value="${element.id}"/>
+                        </c:url>
 
-                            <c:url var="deleteButton" value="/api/employees/delete-employee">
-                                <c:param name="empId" value="${element.id}"/>
-                            </c:url>
-
-                            <td>
-                                <input type="button" value="Update" onclick="window.location.href = '${updateButton}'"/>
-                                <input type="button" value="Delete" onclick="window.location.href = '${deleteButton}'"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-            </c:choose>
+                        <td>
+                            <input type="button" value="Update" onclick="window.location.href = '${updateButton}'"/>
+                            <input type="button" value="Delete" onclick="window.location.href = '${deleteButton}'"/>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
         </table>
     </body>
 </html>

@@ -29,4 +29,6 @@ public interface MyService {
     List<EmployeeDTO> getEmpByDepartment();
 
     List<EmployeeDTO> searchEmployee(List<String> strData);
+
+    boolean existenceOfTheDepartmentWithSuchNameInDB(String departmentName);
 }

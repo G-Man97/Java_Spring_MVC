@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -39,10 +40,35 @@ public class DepartmentController {
         return "department-info";
     }
 
-    @RequestMapping("/save-department")
-    public String saveDepartment(@ModelAttribute("department") Department department) {
+    @RequestMapping(value = "/save-department", method = RequestMethod.POST)
+    public String saveDepartment(@ModelAttribute("department") Department department, Model model) {
+
+        if (department.getId() != 0) {
+
+            Department repoDepartment = myService.getDepartment(department.getId());
+
+            if (!repoDepartment.getDepartmentName().equals(department.getDepartmentName())
+                    && myService.existenceOfTheDepartmentWithSuchNameInDB(department.getDepartmentName())) {
+
+                model.addAttribute("department", department);
+                model.addAttribute("departmentNameIsNotUnique", department);
+
+                return "department-info";
+            }
+        } else {
+            if (myService.existenceOfTheDepartmentWithSuchNameInDB(department.getDepartmentName())) {
+                model.addAttribute("department", department);
+                model.addAttribute("departmentNameIsNotUnique", department);
+
+                return "department-info";
+            }
+        }
+
+        model.addAttribute("listOfDepartments", department);
         myService.saveDepartment(department);
+
         return "redirect:/api/departments";
+
     }
 
     @RequestMapping("/update-department")

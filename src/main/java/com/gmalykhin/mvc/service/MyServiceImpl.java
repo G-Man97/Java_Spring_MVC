@@ -89,4 +89,10 @@ public class MyServiceImpl implements MyService {
     public List<EmployeeDTO> searchEmployee(List<String> strData) {
         return employeeDAO.searchEmployee(strData);
     }
+
+    @Override
+    @Transactional
+    public boolean existenceOfTheDepartmentWithSuchNameInDB(String departmentName) {
+        return departmentDAO.getDepartmentByDepartmentName(departmentName) != null;
+    }
 }

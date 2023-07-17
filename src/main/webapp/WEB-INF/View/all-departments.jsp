@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form id="toMain" action="/api/employees">
+        <form id="toMain" action="${pageContext.request.contextPath}/api/employees">
             <input type="submit" value="<- Main page"/>
         </form>
 

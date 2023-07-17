@@ -3,7 +3,7 @@ package com.gmalykhin.mvc.controller;
 import com.gmalykhin.mvc.dto.EmployeeDTO;
 import com.gmalykhin.mvc.entity.*;
 import com.gmalykhin.mvc.service.MyService;
-import com.gmalykhin.mvc.service.SomeData;
+import com.gmalykhin.mvc.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +57,7 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         return "employee-info";
     }
+
     @RequestMapping("/delete-employee")
     public String deleteEmployee(@RequestParam("employeeId") int id){
         myService.deleteEmployee(id);
@@ -72,8 +73,8 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/search-employee", method = RequestMethod.POST)
-    public String searchEmployee(SomeData someData, Model model) {
-        List<EmployeeDTO> listOfEmployeeDTO = myService.searchEmployee(someData.getStrData());
+    public String searchEmployee(Utils utils, Model model) {
+        List<EmployeeDTO> listOfEmployeeDTO = myService.searchEmployee(utils.getStrData());
 
         model.addAttribute("listOfEmployeeDTO", listOfEmployeeDTO);
         return "employees-by-department";

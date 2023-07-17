@@ -1,19 +1,13 @@
-package com.gmalykhin.mvc.service;
+package com.gmalykhin.mvc.util;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SomeData {
-    private List<String> strData;
-
-    public SomeData() {
-    }
-
-    public SomeData(List<String> strData) {
-        this.strData = strData;
-    }
+public class Utils {
+    private List<String> strData = new ArrayList<>();
 
     public List<String> getStrData() {
         return strData;

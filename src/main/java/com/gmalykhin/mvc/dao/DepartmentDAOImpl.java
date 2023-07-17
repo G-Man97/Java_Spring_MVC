@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.NoResultException;
 import java.util.List;
 @Repository
 public class DepartmentDAOImpl implements DepartmentDAO{
@@ -57,5 +59,20 @@ public class DepartmentDAOImpl implements DepartmentDAO{
                 "from Department d join Employee e ON (d.id = e.department) group by d.departmentName", AverageSalaryByDepartmentDTO.class);
 
         return query.getResultList();
+    }
+
+    @Override
+    public Department getDepartmentByDepartmentName(String name) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Department> query = session
+                .createQuery("from Department where departmentName = :name", Department.class);
+        query.setParameter("name", name);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

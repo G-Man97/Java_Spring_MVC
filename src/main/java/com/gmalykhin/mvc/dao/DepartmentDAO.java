@@ -16,4 +16,6 @@ public interface DepartmentDAO {
     void saveDepartment(Department department);
 
     List<AverageSalaryByDepartmentDTO> getAvgSalaryByDepartment();
+
+    Department getDepartmentByDepartmentName(String departmentName);
 }
