@@ -1,7 +1,7 @@
 <!-- Java_Spring_MVC -->
 <br />
 <div align="center">
-  <h3 align="center">Java_Spring_MVC</h3>
+  <h3 align="center">Java Spring MVC</h3>
 </div>
 
 
